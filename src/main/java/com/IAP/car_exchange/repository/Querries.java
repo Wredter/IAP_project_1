@@ -79,7 +79,7 @@ public class Querries {
     public void deleteUser(Long userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id: " + userId));
-        userRepository.delete(user);
+        userRepository.deleteById(user.getId());
     }
 ///////////////////////////////////////////////////////////CARS/////////////////////////////////////////////////////////
     public Car getCarByPlate(String plateNumber){
@@ -105,7 +105,7 @@ public class Querries {
     public void deleteCar(String plateNumber){
         Car car = carRepository.findById(plateNumber)
                 .orElseThrow(() -> new IllegalArgumentException("There are no sars with plate=" + plateNumber + "!"));
-        carRepository.delete(car);
+        carRepository.deleteById(car.getPlateNumber());
     }
     public Car updateCar(String plateNumber, CarData carData){
         Car car = carRepository.findById(plateNumber)
@@ -137,7 +137,7 @@ public class Querries {
     public void deleteOffice(Long id){
         Office office = officeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("There are no offices with id=" + id + "!"));
-        officeRepository.delete(office);
+        officeRepository.deleteById(office.getId());
     }
     public Office updateOffice(Long id, OfficeData officeData){
         Office office = officeRepository.findById(id)
