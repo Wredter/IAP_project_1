@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 @Table(name = "offices")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
 public class Office {
     @Getter
