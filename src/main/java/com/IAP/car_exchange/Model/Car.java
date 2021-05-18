@@ -16,8 +16,8 @@ public class Car {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "worker_id", nullable = false, referencedColumnName = "id")
-    private User worker_id;
+    @JoinColumn(name = "worker_id", nullable = true, referencedColumnName = "id")
+    private User workerId;
 
     @Getter
     @Setter
@@ -35,5 +35,15 @@ public class Car {
     @Setter
     @Column(name = "model")
     private String model;
+    
+    @Getter
+    @Setter
+    @Column(name = "type")
+    private String type;
+    
+    @Getter
+    @Setter
+    @Column(name = "vin_number")
+    private String vinNumber;
 
 }

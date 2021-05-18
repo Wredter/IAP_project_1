@@ -4,8 +4,10 @@ import lombok.Data;
 
 @Data
 public class CarData {
+	Long workerId;
     String plateNumber;
     String licenseNumber;
     String model;
-    Long worker_id;
+    String type;
+    String vinNumber;   
 }

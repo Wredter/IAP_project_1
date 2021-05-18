@@ -20,8 +20,8 @@ public class CarControler {
     Querries DataAccess;
 
     @GetMapping("car/{plate_number}")
-    public Car getCar(@PathVariable String plateNumber){
-        return DataAccess.getCarByPlate(plateNumber);
+    public Car getCar(@PathVariable String plate_number){
+        return DataAccess.getCarByPlate(plate_number);
     }
 
     @GetMapping("cars")
@@ -30,21 +30,25 @@ public class CarControler {
         return DataAccess.getAllCars();
     }
 
-    @PostMapping("/addcar")
+    @PostMapping("car")
     public @ResponseBody
     ResponseEntity<String> addCAr(@RequestBody CarData dataHolder){
-        Car car = DataAccess.addCar(dataHolder.getPlateNumber(),
+        Car car = DataAccess.addCar(
+        		dataHolder.getPlateNumber(),
                 dataHolder.getLicenseNumber(),
                 dataHolder.getModel(),
-                dataHolder.getWorker_id());
+                dataHolder.getWorkerId(),
+                dataHolder.getType(),
+                dataHolder.getVinNumber()
+        		);
         return ResponseEntity.ok(car.toString());
     }
-    @PostMapping("editcar")
-    public ResponseEntity<String> editUser(@RequestBody CarData dataHolder){
-        Car car = DataAccess.updateCar(dataHolder.getPlateNumber(), dataHolder);
+    @PutMapping("car/{plate}")
+    public ResponseEntity<String> editCar(@PathVariable("plate") String plate, @RequestBody CarData dataHolder){
+        Car car = DataAccess.updateCar(plate, dataHolder);
         return ResponseEntity.ok(car.toString());
     }
-    @DeleteMapping("deletecar/{plate}")
+    @DeleteMapping("_car/{plate}")
     public ResponseEntity<String> deleteUser(@PathVariable("plate") String plate){
         DataAccess.deleteCar(plate);
         return ResponseEntity.ok("Removed");

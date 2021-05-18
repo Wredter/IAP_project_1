@@ -19,7 +19,7 @@ public class User {
     @Setter
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Getter
@@ -35,7 +35,7 @@ public class User {
     @Getter
     @Setter
     @Column(name = "surname")
-    private String sureName;
+    private String surName;
 
     @Getter
     @Setter
@@ -56,24 +56,32 @@ public class User {
 
     @Getter
     @Setter
-    @Column(name = "role")
-    private String role;
-
+    //@OneToOne(cascade = CascadeType.ALL,orphanRemoval=true)
+    //@JoinColumn(name = "office_id", referencedColumnName = "id")
+    //private Office officeId;
+    //@NotNull
+    //@Column(name = "office_id")
+    //private Long officeId;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "office_id", nullable = false, referencedColumnName = "id")
+    private Office officeId;
+    
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "office_id", referencedColumnName = "id")
-    private Office officeId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
+    private Role roleId;
+    
 
-    public User(String firstName, String middleName, String sureName, String pesel, char gender, Date birthDate, String role, Office officeId){
+    public User(String firstName, String middleName, String surName, String pesel, char gender, Date birthDate,Role roleId,Office officeId){
         this.firstName = firstName;
         this.middleName = middleName;
-        this.sureName = sureName;
+        this.surName = surName;
         this.pesel = pesel;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.role = role;
+        this.roleId = roleId;
         this.officeId = officeId;
-
     }
 }

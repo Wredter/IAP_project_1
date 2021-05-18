@@ -26,18 +26,18 @@ public class OfficeControler {
         return DataAccess.getAllOffices();
     }
 
-    @PostMapping("/addoffice")
+    @PostMapping("office")
     public @ResponseBody
     ResponseEntity<String> addOffice(@RequestBody OfficeData dataHolder){
-        Office office = DataAccess.addOffice(dataHolder.getCity(), dataHolder.getType());
+        Office office = DataAccess.addOffice(dataHolder.getId(),dataHolder.getCity(), dataHolder.getType());
         return ResponseEntity.ok(office.toString());
     }
-    @PostMapping("editoffice/{id}")
+    @PostMapping("office/{id}")
     public ResponseEntity<String> editOffice(@PathVariable("id") Long id, @RequestBody OfficeData dataHolder){
         Office office = DataAccess.updateOffice(id, dataHolder);
         return ResponseEntity.ok(office.toString());
     }
-    @DeleteMapping("deleteoffice/{id}")
+    @DeleteMapping("_office/{id}")
     public ResponseEntity<String> deleteOffice(@PathVariable("id") Long id){
         DataAccess.deleteOffice(id);
         return ResponseEntity.ok("Removed");

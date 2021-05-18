@@ -19,42 +19,46 @@ public class UserControler {
     Querries DataAccess;
 
     @GetMapping("user/{user_id}")
+    @ResponseBody
     public User getUser(@PathVariable Long user_id){
         return DataAccess.getUserById(user_id);
     }
+    
 
     @GetMapping("users")
     public @ResponseBody Iterable<User> getUsers(){
         return DataAccess.getAllUsers();
     }
 
-    @PostMapping("/adduser")
+    @PostMapping("user")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody ResponseEntity<String> addUser(@RequestBody UserData dataHolder){
         Date date;
         try {
-             date = new SimpleDateFormat("yyyy-mm-dd").parse(dataHolder.getBirthDate());
+        	//System.out.println(dataHolder.getOfficeId());
+            date = new SimpleDateFormat("yyyy-mm-dd").parse(dataHolder.getBirthDate());
         } catch (ParseException e) {
             e.printStackTrace();
             return new ResponseEntity<>("Date formating error use 'yyyy-mm-dd'", HttpStatus.BAD_REQUEST);
         }
         User user = DataAccess.addUser(
+        		dataHolder.getId(),
                 dataHolder.getFirstName(),
                 dataHolder.getMiddleName(),
                 dataHolder.getSurname(),
                 dataHolder.getPesel(),
                 dataHolder.getGender(),
                 date,
-                dataHolder.getRole(),
+                dataHolder.getRoleId(),
                 dataHolder.getOfficeId());
         return ResponseEntity.ok(user.toString());
     }
-    @PostMapping("edituser/{user_id}")
+    @PutMapping("user/{user_id}")
     public ResponseEntity<String> editUser(@PathVariable("user_id") Long id, @RequestBody UserData dataHolder){
         User user = DataAccess.updateUser(id, dataHolder);
         return ResponseEntity.ok(user.toString());
     }
-    @DeleteMapping("deleteuser/{user_id}")
+    @DeleteMapping("_user/{user_id}")
     public ResponseEntity<String> deleteUser(@PathVariable("user_id") Long id){
         DataAccess.deleteUser(id);
         return ResponseEntity.ok("Removed");
