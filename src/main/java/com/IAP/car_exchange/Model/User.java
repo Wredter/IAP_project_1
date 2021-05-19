@@ -5,6 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Cascade;
+
 import java.util.Date;
 
 
@@ -21,6 +24,7 @@ public class User {
     @NotNull
     //@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
 
     @Getter
     @Setter
@@ -64,12 +68,14 @@ public class User {
     //private Long officeId;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "office_id", nullable = false, referencedColumnName = "id")
     private Office officeId;
     
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
     private Role roleId;
     
