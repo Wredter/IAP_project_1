@@ -235,4 +235,18 @@ public class Querries {
     public Iterable<Request> getAllRequests(){
     	return requestRepository.findAll();
     }
+    
+    public Request getRequestById(Long id){
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("There is no request with id=" + id + "!"));
+        return request;
+    }
+    
+    public void deleteRequest(Long id){
+    	//User user = userRepository.fi
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("There is no request with id=" + id + "!"));
+        requestRepository.delete(request);
+    }
+    
 }
