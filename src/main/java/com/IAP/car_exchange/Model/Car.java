@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table(name = "cars")
 @Builder
@@ -17,7 +19,8 @@ public class Car {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "worker_id", nullable = true, referencedColumnName = "id")
+    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
+    @JoinColumn(name = "worker_id", nullable = false, referencedColumnName = "id")
     private User workerId;
 
     @Getter
