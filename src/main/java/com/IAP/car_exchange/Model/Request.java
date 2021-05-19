@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table(name = "requests")
 @NoArgsConstructor
@@ -26,6 +28,7 @@ public class Request {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "requestor_id", nullable = false, referencedColumnName = "id")
     private User requestorId;
 	
