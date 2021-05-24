@@ -1,3 +1,8 @@
+# PORTS:
+  # DB 3306 - closed
+  # backend: 8180
+  # myadmin: 8181
+
 version: '3.1'
 
 services:
@@ -14,7 +19,7 @@ services:
     ports:
         - "3306:3306"
     volumes:
-        - "./initmysql8.sql:/docker-entrypoint-initdb.d/1.sql"
+        - "./initmysql8-v3.sql:/docker-entrypoint-initdb.d/1.sql"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: notSecureChangeMe 
