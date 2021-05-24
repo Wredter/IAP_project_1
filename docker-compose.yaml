@@ -9,33 +9,16 @@ services:
 #     depends_on:
 #         - db
   db:
-    # image: mysql:5.7
     image: mysql
     container_name: db
-    # command: --init-file /data/application/init.sql
     ports:
         - "3306:3306"
     volumes:
         - "./initold.sql:/docker-entrypoint-initdb.d/1.sql"
-        # - "./init.sql:/docker-entrypoint-initdb.d/1.sql"
-        # - ./init.sql:/data/application/init.sql
     restart: always
     environment:
-      # MYSQL_USER: user
-      # MYSQL_PASSWORD: notSecureChangeMe
       MYSQL_ROOT_PASSWORD: notSecureChangeMe 
-  # db:
-  #   image: mariadb:10.3
-  #   container_name: db
-  #   command: --init-file /data/application/init.sql
-  #   ports:
-  #       - "3306:3306"
-  #   volumes:
-  #       - ./init.sql:/data/application/init.sql
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: notSecureChangeMe
-
+      
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin
@@ -50,3 +33,17 @@ services:
 
       #  --force-rm
       # http://localhost:8082/users
+
+    # image: mysql:5.7
+
+      # db:
+      #   image: mariadb:10.3
+      #   container_name: db
+      #   command: --init-file /data/application/init.sql
+      #   ports:
+      #       - "3306:3306"
+      #   volumes:
+      #       - ./init.sql:/data/application/init.sql
+      #   restart: always
+      #   environment:
+      #     MYSQL_ROOT_PASSWORD: notSecureChangeMe
