@@ -38,7 +38,7 @@ CREATE TABLE `cars` (
   `plate_number` varchar(255) NOT NULL COMMENT 'plate number',
   `license_number` varchar(255) NOT NULL COMMENT 'registered license number',
   `model` varchar(255) NOT NULL COMMENT 'car model'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `cars`
@@ -60,7 +60,7 @@ CREATE TABLE `offices` (
   `id` int(11) NOT NULL,
   `city` varchar(255) NOT NULL COMMENT 'city of operation',
   `type` varchar(255) NOT NULL COMMENT 'BO or HQ'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `offices`
@@ -86,7 +86,7 @@ CREATE TABLE `users` (
   `birth_date` date NOT NULL COMMENT 'to include birthdate',
   `role` varchar(255) NOT NULL COMMENT 'administrator or client',
   `office_id` varchar(255) NOT NULL COMMENT 'where he work'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
