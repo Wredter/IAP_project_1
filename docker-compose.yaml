@@ -22,7 +22,7 @@ services:
         - "./initmysql8-v3.sql:/docker-entrypoint-initdb.d/1.sql"
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: notSecureChangeMe 
+      MYSQL_ROOT_PASSWORD: my-secret-pw 
       
   phpmyadmin:
     image: phpmyadmin
