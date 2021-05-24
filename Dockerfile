@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN mvn package -q
+# RUN mvn package
+# RUN mvn package -X
 
 ### STAGE 2: Run ###
 FROM openjdk:11.0.8-jre-buster
