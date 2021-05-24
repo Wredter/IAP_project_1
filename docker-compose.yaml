@@ -9,6 +9,7 @@ services:
 #     depends_on:
 #         - db
   db:
+    # image: mysql:5.7
     image: mysql
     container_name: db
     # command: --init-file /data/application/init.sql
@@ -20,8 +21,8 @@ services:
         # - ./init.sql:/data/application/init.sql
     restart: always
     environment:
-      MYSQL_USER: user
-      MYSQL_PASSWORD: notSecureChangeMe
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: notSecureChangeMe
       MYSQL_ROOT_PASSWORD: notSecureChangeMe 
   # db:
   #   image: mariadb:10.3
