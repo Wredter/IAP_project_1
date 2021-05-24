@@ -15,11 +15,14 @@ services:
     ports:
         - "3306:3306"
     volumes:
-        - "./init.sql:/docker-entrypoint-initdb.d/1.sql"
+        - "./initold.sql:/docker-entrypoint-initdb.d/1.sql"
+        # - "./init.sql:/docker-entrypoint-initdb.d/1.sql"
         # - ./init.sql:/data/application/init.sql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      MYSQL_USER: user
+      MYSQL_PASSWORD: notSecureChangeMe
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe 
   # db:
   #   image: mariadb:10.3
   #   container_name: db
