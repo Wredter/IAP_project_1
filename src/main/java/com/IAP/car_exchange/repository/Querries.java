@@ -2,6 +2,7 @@ package com.IAP.car_exchange.repository;
 
 import com.IAP.car_exchange.Controller.DataHolders.CarData;
 import com.IAP.car_exchange.Controller.DataHolders.OfficeData;
+import com.IAP.car_exchange.Controller.DataHolders.Response;
 import com.IAP.car_exchange.Controller.DataHolders.RoleData;
 import com.IAP.car_exchange.Controller.DataHolders.UserData;
 import com.IAP.car_exchange.Model.Car;
@@ -9,13 +10,11 @@ import com.IAP.car_exchange.Model.Office;
 import com.IAP.car_exchange.Model.Request;
 import com.IAP.car_exchange.Model.Role;
 import com.IAP.car_exchange.Model.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.common.collect.Iterables;
 
-import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -108,7 +107,9 @@ public class Querries {
     public Iterable<Car> getAllCars(){
         return carRepository.findAll();
     }
-    public Car addCar(String plateNumber, String licenseNumber, String model, Long workerId,String type, String vinNumber){
+        
+    
+    public Car addCar(String plateNumber, String licenseNumber, String model, Long workerId,String type, String vinNumber,Boolean assigned){
         User user = userRepository.findById(workerId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid worker Id: " + workerId));
         Car car = Car.builder()
@@ -118,6 +119,7 @@ public class Querries {
                 .model(model)
                 .type(type)
                 .vinNumber(vinNumber)
+                .assigned(assigned)
                 .build();
         carRepository.save(car);
         return car;
@@ -215,7 +217,7 @@ public class Querries {
     
     //////////////////////////////////////////////////////REQUESTS///////////////////////////////////////////////////////
     
-    public Request addRequest(Long requestorId,Long branchId,String carModel,String vehiclePreffered,Date requestDate) {
+    public Request addRequest(Long requestorId,Long branchId,String carModel,String vehiclePreffered,Date requestDate, Long branchRequestId) {
         User user = userRepository.findById(requestorId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid requestor Id: " + requestorId));
         Office office = officeRepository.findById(branchId)
@@ -226,6 +228,7 @@ public class Querries {
     			.carModel(carModel)
     			.vehiclePreffered(vehiclePreffered)
     			.requestDate(requestDate)
+    			.branchRequestId(branchRequestId)
     			.build();
     	requestRepository.save(request);
     	return request;
@@ -248,5 +251,68 @@ public class Querries {
                 .orElseThrow(() -> new IllegalArgumentException("There is no request with id=" + id + "!"));
         requestRepository.delete(request);
     }
+    
+    
+    /////////////////////////ASSIGN CAR/////////////////////////////////////////////////////////////////////
+    // Find Car By (model,type,assigned?,super_admin_id)
+    public Iterable<Car> getCarByModelType(String model, String type) {	
+    	return carRepository.findByModelType(model, type);
+    }
+    
+    //TODO Find unassigned requests by searching searchByStatus, return the request ID for the admin to select from
+    //get unassigned requests
+    public Iterable<Request> getPendingRequests(){
+    	return requestRepository.pendingRequests();
+    }
+    //TODO Give approval status as assigned/rejected
+    public Response assign(Long requestId) {
+    	Response response = new Response();
+		Request request = requestRepository.findById(requestId)
+				.orElseThrow(() -> new IllegalArgumentException("There is no request with id=" + requestId + "!"));
+		
+		Iterable<Car> cars = carRepository.findByModelType(request.getCarModel(),request.getVehiclePreffered());
+		
+    	//System.out.println("passed here = "+Iterables.size(cars));
+    	
+    	if (Iterables.isEmpty(cars) != true) {
+    		Car car = Iterables.get(cars, 0);
+    		car.setAssigned(true);
+    		carRepository.save(car);
+    		
+    		// Change the request status
+    		request.setApprovedDate(new Date());
+    		request.setRequestStatus("approved");
+    		requestRepository.save(request);
+    		
+    		// Pack the Response/car detail
+    		response.setWorkerId(request.getRequestorId().getId());
+    		response.setPlateNumber(car.getPlateNumber());
+    		response.setLicenseNumber(car.getLicenseNumber());
+    		response.setModel(car.getModel());
+    		response.setType(car.getType());
+    		response.setVinNumber(car.getVinNumber());
+    		
+    	}
+    	
+    	else {
+    		request.setApprovedDate(new Date());
+    		request.setRequestStatus("rejected");
+    		requestRepository.save(request);
+    	}
+    	
+    	//// Pack the Response message and send back to the requestor
+    	
+		response.setRequestId(request.getBranchRequestId());
+		response.setRequestStatus(request.getRequestStatus());
+		response.setApprovedDate(request.getApprovedDate());
+		
+		//Forward this response to the respective branch
+		//RestTemplate rest = new RestTemplate();
+		
+    	return response;
+    	
+    }
+    
+    //TODO Send the car detail to the requestor --> write the car table
     
 }
