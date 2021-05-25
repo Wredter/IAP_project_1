@@ -19,8 +19,8 @@
 -- Table structure for table `cars`
 --
 
-CREATE DATABASE iap-test;
-USE iap-test;
+CREATE DATABASE `iap-test`;
+USE `iap-test`;
 
 DROP TABLE IF EXISTS `cars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
