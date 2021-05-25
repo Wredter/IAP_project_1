@@ -3,8 +3,11 @@ FROM maven:3.6.3-openjdk-11 AS build
 WORKDIR /usr/src/app
 COPY . .
 
-RUN mvn package -q
-# RUN mvn package
+# important, cache libs
+# https://stackoverflow.com/questions/42208442/maven-docker-cache-dependencies
+
+# RUN mvn package -q
+RUN mvn package
 # RUN mvn package -X
 
 ### STAGE 2: Run ###
