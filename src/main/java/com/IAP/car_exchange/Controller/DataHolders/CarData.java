@@ -9,5 +9,6 @@ public class CarData {
     String licenseNumber;
     String model;
     String type;
-    String vinNumber;   
+    String vinNumber;
+    Boolean assigned;
 }
