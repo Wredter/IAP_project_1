@@ -39,7 +39,8 @@ public class CarControler {
                 dataHolder.getModel(),
                 dataHolder.getWorkerId(),
                 dataHolder.getType(),
-                dataHolder.getVinNumber()
+                dataHolder.getVinNumber(),
+                false
         		);
         return ResponseEntity.ok(car.toString());
     }

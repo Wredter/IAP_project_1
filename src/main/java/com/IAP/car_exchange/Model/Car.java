@@ -19,7 +19,7 @@ public class Car {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
+    //@Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "worker_id", nullable = false, referencedColumnName = "id")
     private User workerId;
 
@@ -49,5 +49,10 @@ public class Car {
     @Setter
     @Column(name = "vin_number")
     private String vinNumber;
+    
+    @Getter
+    @Setter
+    @Column(name = "assigned")
+    private Boolean assigned;
 
 }
