@@ -43,12 +43,12 @@ public class CarControler {
         		);
         return ResponseEntity.ok(car.toString());
     }
-    @PutMapping("car/{plate}")
+    @PutMapping("car/{plate_number}")
     public ResponseEntity<String> editCar(@PathVariable("plate") String plate, @RequestBody CarData dataHolder){
         Car car = DataAccess.updateCar(plate, dataHolder);
         return ResponseEntity.ok(car.toString());
     }
-    @DeleteMapping("_car/{plate}")
+    @DeleteMapping("_car/{plate_number}")
     public ResponseEntity<String> deleteUser(@PathVariable("plate") String plate){
         DataAccess.deleteCar(plate);
         return ResponseEntity.ok("Removed");
