@@ -68,14 +68,14 @@ public class User {
     //private Long officeId;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
+    //@Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "office_id", nullable = false, referencedColumnName = "id")
     private Office officeId;
     
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
+    //@Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
     private Role roleId;
     

@@ -15,5 +15,6 @@ public class RequestData {
 	String requestStatus;
 	String approvedBy;
 	Date approvedDate;
+	Long branchRequestId;
 
 }

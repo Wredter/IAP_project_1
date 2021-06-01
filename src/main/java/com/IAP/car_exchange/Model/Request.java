@@ -28,7 +28,7 @@ public class Request {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
+    //@Cascade( { org.hibernate.annotations.CascadeType.ALL } )
     @JoinColumn(name = "requestor_id", nullable = false, referencedColumnName = "id")
     private User requestorId;
 	
@@ -59,22 +59,24 @@ public class Request {
 	
 	@Getter
 	@Setter
-	@Null
 	@Column(name="request_status")
 	private String requestStatus;
 	
 	@Getter
 	@Setter
-	@Null
 	@Column(name="approved_by")
 	private String approvedBy;
 	
 	@Getter
 	@Setter
 	@Temporal(TemporalType.DATE)
-	@Null
 	@Column(name="approved_date")
 	private Date approvedDate;
+	
+	@Getter
+	@Setter
+	@Column(name="branch_request_id",nullable=false)
+	private Long branchRequestId;
 	
 
 }

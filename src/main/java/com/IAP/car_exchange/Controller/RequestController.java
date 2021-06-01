@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.IAP.car_exchange.Controller.DataHolders.RequestData;
 import com.IAP.car_exchange.Model.Office;
 import com.IAP.car_exchange.Model.Request;
 import com.IAP.car_exchange.repository.Querries;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @RestController
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RequestController {
 	@Autowired
 	Querries DataAccess;
@@ -25,17 +28,22 @@ public class RequestController {
 	@PostMapping("request")
     public @ResponseBody
     ResponseEntity<String> createRequest(@RequestBody RequestData dataHolder){
-		
         Request request = DataAccess.addRequest(
         		dataHolder.getRequestorId(),
         		dataHolder.getBranchId(),
         		dataHolder.getCarModel(),
         		dataHolder.getVehiclePreffered(),
         		//dataHolder.getRequestDate()
-        		new Date()
+        		new Date(),
+        		dataHolder.getRequestId()
         		);
         
-        return ResponseEntity.ok(request.toString());
+        //Send this Request to Main Office as well
+        //String uri = "http://localhost:8081/request";
+        //RestTemplate restTemplate = new RestTemplate();
+        //RequestData result = restTemplate.postForObject(uri,dataHolder, RequestData.class);
+
+        return ResponseEntity.ok(null);
     }
 	
 	@GetMapping("requests")

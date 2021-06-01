@@ -1,10 +1,18 @@
+# docker build -t iap-back .
+# docker run --name  container-iap-back -p 8081:80 -d iap-back
+
 ### STAGE 1: Build ###
 FROM maven:3.6.3-openjdk-11 AS build
 WORKDIR /usr/src/app
-COPY . .
 
-# important, cache libs
+
+# dependencies verify without project file: for better layers building
 # https://stackoverflow.com/questions/42208442/maven-docker-cache-dependencies
+ADD pom.xml /usr/src/app
+RUN ["/usr/local/bin/mvn-entrypoint.sh", "mvn", "verify", "clean", "--fail-never"]
+
+# copy other files
+COPY . .
 
 # RUN mvn package -q
 RUN mvn package
