@@ -35,9 +35,12 @@ public class AssignCarController {
 		ResponseEntity<String> assign(@PathVariable Long requestId){
 		Response response = DataAccess.assign(requestId);
 		//System.out.println("passed here "+response);
-		RestTemplate rest = new RestTemplate();
-		String uri = "http://localhost:8081/details";
-		Response result = rest.postForObject(uri, response, Response.class);
+		
+		/*
+		 * RestTemplate rest = new RestTemplate(); String uri =
+		 * "http://localhost:8081/details"; Response result = rest.postForObject(uri,
+		 * response, Response.class);
+		 */
 		
 		return ResponseEntity.ok(null);
 		}

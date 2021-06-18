@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
+import com.IAP.car_exchange.SynchronizationConfiguration;
 import com.IAP.car_exchange.Controller.DataHolders.RequestData;
-import com.IAP.car_exchange.Model.Office;
 import com.IAP.car_exchange.Model.Request;
 import com.IAP.car_exchange.repository.Querries;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +23,8 @@ public class RequestController {
 	@Autowired
 	Querries DataAccess;
 	
-	@PostMapping("request")
+	// Create this request as received from BO
+	@PostMapping(SynchronizationConfiguration.uriFromBo)
     public @ResponseBody
     ResponseEntity<String> createRequest(@RequestBody RequestData dataHolder){
         Request request = DataAccess.addRequest(

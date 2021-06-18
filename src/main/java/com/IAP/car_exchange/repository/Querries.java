@@ -8,6 +8,7 @@ import com.IAP.car_exchange.Controller.DataHolders.UserData;
 import com.IAP.car_exchange.Model.Car;
 import com.IAP.car_exchange.Model.Office;
 import com.IAP.car_exchange.Model.Request;
+import com.IAP.car_exchange.Model.Responses;
 import com.IAP.car_exchange.Model.Role;
 import com.IAP.car_exchange.Model.User;
 import com.google.common.collect.Iterables;
@@ -29,13 +30,16 @@ public class Querries {
     final CarRepository carRepository;
     final RoleRepository roleRepository;
     final RequestRepository requestRepository;
+    final ResponsesRepository responsesRepository;
 
-    public Querries(UserRepository userRepository, OfficeRepository officeRepository, CarRepository carRepository,RoleRepository roleRepository,RequestRepository requestRepository){
+    public Querries(UserRepository userRepository, OfficeRepository officeRepository, CarRepository carRepository,
+    		RoleRepository roleRepository,RequestRepository requestRepository,ResponsesRepository responsesRepository){
         this.userRepository = userRepository;
         this.officeRepository = officeRepository;
         this.carRepository = carRepository;
         this.roleRepository = roleRepository;
         this.requestRepository = requestRepository;
+        this.responsesRepository = responsesRepository;
     }
 /////////////////////////////////////////USERS//////////////////////////////////////////////////////////////////////////
     public User getUserById(long id) throws IllegalArgumentException {
@@ -273,7 +277,8 @@ public class Querries {
 		Iterable<Car> cars = carRepository.findByModelType(request.getCarModel(),request.getVehiclePreffered());
 		
     	//System.out.println("passed here = "+Iterables.size(cars));
-    	
+		
+		response.setId(requestId);
     	if (Iterables.isEmpty(cars) != true) {
     		Car car = Iterables.get(cars, 0);
     		car.setAssigned(true);
@@ -309,6 +314,29 @@ public class Querries {
 		//Forward this response to the respective branch
 		//RestTemplate rest = new RestTemplate();
 		
+		
+		
+		// Keep copy of this car assignment
+		response.setSent(false);
+
+			Responses r = Responses.builder()
+					.id(response.getId())
+					.workerId(response.getWorkerId())
+					.plateNumber(response.getPlateNumber())
+					.licenseNumber(response.getLicenseNumber())
+					.model(response.getModel())
+					.type(response.getType())
+					.vinNumber(response.getVinNumber())
+					.requestId(response.getRequestId())
+					.requestStatus(response.getRequestStatus())
+					.approvedBy(response.getApprovedBy())
+					.approvedDate(response.getApprovedDate())
+					.sent(response.getSent())
+					.build();
+			//System.out.println(response.getWorkerId());
+			responsesRepository.save(r);
+
+
     	return response;
     	
     }

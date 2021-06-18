@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Response {
+	Long id;
 	Long workerId;
     String plateNumber;
     String licenseNumber;
@@ -16,4 +17,5 @@ public class Response {
     String requestStatus;
     String approvedBy;
     Date approvedDate;
+    Boolean sent;
 }
