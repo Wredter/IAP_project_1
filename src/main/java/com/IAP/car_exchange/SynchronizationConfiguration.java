@@ -3,7 +3,7 @@ package com.IAP.car_exchange;
 public class SynchronizationConfiguration {
 	
 	// connection to BO
-	public static final String uriToBo = "http://localhost:8826/details";
+	public static final String uriToBo = "http://s-vm.northeurope.cloudapp.azure.com:8826/details";
 	
 	// connection from BO
 	public static final String  uriFromBo = "request";
