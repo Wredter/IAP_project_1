@@ -17,7 +17,7 @@ public class Role {
 	@Id
 	@NotNull
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
 	
     //@OneToOne(cascade = CascadeType.ALL,orphanRemoval=true)
