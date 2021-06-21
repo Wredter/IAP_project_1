@@ -116,6 +116,10 @@ public class Querries {
     public Car addCar(String plateNumber, String licenseNumber, String model, Long workerId,String type, String vinNumber,Boolean assigned){
         User user = userRepository.findById(workerId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid worker Id: " + workerId));
+        Car mycar = carRepository.getCarByPlateNumber(plateNumber);
+        if (mycar != null) {
+        	throw new IllegalArgumentException("The car already exists");
+        }
         Car car = Car.builder()
         		.workerId(user)
                 .plateNumber(plateNumber)
