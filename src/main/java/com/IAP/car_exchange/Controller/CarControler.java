@@ -45,13 +45,13 @@ public class CarControler {
         return ResponseEntity.ok(car.toString());
     }
     @PutMapping("car/{plate_number}")
-    public ResponseEntity<String> editCar(@PathVariable("plate") String plate, @RequestBody CarData dataHolder){
-        Car car = DataAccess.updateCar(plate, dataHolder);
+    public ResponseEntity<String> editCar(@PathVariable("plate_number") String plate_number, @RequestBody CarData dataHolder){
+        Car car = DataAccess.updateCar(plate_number, dataHolder);
         return ResponseEntity.ok(car.toString());
     }
     @DeleteMapping("_car/{plate_number}")
-    public ResponseEntity<String> deleteUser(@PathVariable("plate") String plate){
-        DataAccess.deleteCar(plate);
+    public ResponseEntity<String> deleteUser(@PathVariable("plate_number") String plate_number){
+        DataAccess.deleteCar(plate_number);
         return ResponseEntity.ok("Removed");
     }
 }

@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface CarRepository extends JpaRepository<Car, String> {
 	@Query("SELECT c FROM Car c WHERE c.model=?1 AND c.type=?2 AND c.assigned= false")
 	Iterable<Car> findByModelType(String model,String type);
+	
+	@Query("SELECT c from Car c WHERE c.plateNumber=?1")
+	Car getCarByPlateNumber(String plateNumber);
 }
