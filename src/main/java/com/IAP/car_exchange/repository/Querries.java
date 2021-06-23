@@ -52,17 +52,33 @@ public class Querries {
         return userRepository.findAll();
     }
 
-    public User addUser(Long id,String firstName, String middleName, String surName, String pesel, char gender, Date birthDate, Long roleId, Long officeId){
-       Office office = officeRepository.findById(officeId)
+    public User addUser(Long id,String firstName, String middleName, String surname, String pesel, char gender, Date birthDate, Long roleId, Long officeId){
+    	
+    	if (officeId == 1) {
+    		if (id < 200 || id > 20000) {
+    			throw new IllegalArgumentException("HQ User Id should be in range 200-20000");
+    		}
+    	}
+    	
+    	Office office = officeRepository.findById(officeId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid office Id: " + officeId));
-       Role role = roleRepository.findById(roleId)
+    	
+    	Role role = roleRepository.findById(roleId)
                .orElseThrow(() -> new IllegalArgumentException("Invalid role Id: " + roleId));
 
+ 
+    	Boolean myUser = userRepository.getUserWithId(id);
+       
+       
+       if (myUser == true) {
+    	   throw new IllegalStateException();
+       }
+       
        User user = User.builder()
     		   	.id(id)
     		   	.firstName(firstName)
                 .middleName(middleName)
-                .surName(surName)
+                .surname(surname)
                 .pesel(pesel)
                 .gender(gender)
                 .birthDate(birthDate)
@@ -88,7 +104,7 @@ public class Querries {
         }
         user.setFirstName(userData.getFirstName());
         user.setMiddleName(userData.getMiddleName());
-        user.setSurName(userData.getSurname());
+        user.setSurname(userData.getSurname());
         user.setPesel(userData.getPesel());
         user.setGender(userData.getGender());
         user.setBirthDate(date);
@@ -159,17 +175,32 @@ public class Querries {
     public Iterable<Office> getAllOffices(){
         return officeRepository.findAll();
     }
-    public Office addOffice(Long id,String city, String type){
+    public Office addOffice(Long id,String city, String type, String address){
+    	Boolean myoffice = officeRepository.officeExists(id);
+    	if(myoffice == true) {
+    		throw new IllegalArgumentException("Office Exists "+id);
+    	}
+    	
+    	if(id >= 10 && id <= 20 && type.equals("BO")) {
+    			throw new IllegalArgumentException("This Office ID is reserved for HQ's only(10-20): "+id);
+    	}
+
+    	if ((id < 10 || id > 20) && type.equals("HQ")) {
+    			throw new IllegalArgumentException("Office ID for HQ's should be within (10-20): ");
+    		}
+
+
         Office office = Office.builder()
         		.id(id)
                 .city(city)
                 .type(type)
+                .address(address)
                 .build();
         officeRepository.save(office);
+        
         return office;
     }
     public void deleteOffice(Long id){
-    	//User user = userRepository.fi
         Office office = officeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("There are no offices with id=" + id + "!"));
         officeRepository.deleteById(office.getId());
@@ -254,7 +285,6 @@ public class Querries {
     }
     
     public void deleteRequest(Long id){
-    	//User user = userRepository.fi
         Request request = requestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("There is no request with id=" + id + "!"));
         requestRepository.delete(request);

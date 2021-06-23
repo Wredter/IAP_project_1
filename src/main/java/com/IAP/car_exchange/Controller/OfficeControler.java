@@ -29,8 +29,9 @@ public class OfficeControler {
     @PostMapping("office")
     public @ResponseBody
     ResponseEntity<String> addOffice(@RequestBody OfficeData dataHolder){
-        Office office = DataAccess.addOffice(dataHolder.getId(),dataHolder.getCity(), dataHolder.getType());
-        return ResponseEntity.ok(office.toString());
+        Office office = DataAccess.addOffice(dataHolder.getId(),dataHolder.getCity(), 
+        		dataHolder.getType(),dataHolder.getAddress());
+        return ResponseEntity.ok(null);
     }
     @PostMapping("office/{id}")
     public ResponseEntity<String> editOffice(@PathVariable("id") Long id, @RequestBody OfficeData dataHolder){

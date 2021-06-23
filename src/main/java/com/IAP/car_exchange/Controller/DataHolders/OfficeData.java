@@ -7,4 +7,5 @@ public class OfficeData {
 	Long id;
     String city;
     String type;
+    String address;
 }

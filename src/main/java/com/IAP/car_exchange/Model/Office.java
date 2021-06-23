@@ -35,4 +35,9 @@ public class Office {
     @Setter
     @Column(name = "type")
     public String type;
+    
+    @Getter
+    @Setter
+    @Column(name = "address")
+    public String address;
 }

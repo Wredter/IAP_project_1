@@ -22,7 +22,7 @@ public class ResponsesSyncController {
 	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
 	
-	@Scheduled(fixedDelay=SynchronizationConfiguration.delay)
+	//@Scheduled(fixedDelay=SynchronizationConfiguration.delay)
 	public void synchronizeResponses() {
 		logger.info("Scheduled Synchronization Task :: Execution Time - {}",dateFormat.format(LocalDateTime.now()));
 		try {
