@@ -16,16 +16,10 @@ public class Office {
     @Getter
     @Setter
     @Id
-    //@Size(max = 32)
     @NotNull
     @Column(name = "id")
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
-    
-    //@OneToMany(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "id", nullable = false, referencedColumnName = "office_id")
-    //private User id;
-    
+     
     @Getter
     @Setter
     @Column(name = "city")

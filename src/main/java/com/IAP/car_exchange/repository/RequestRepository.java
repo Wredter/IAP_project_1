@@ -9,5 +9,8 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
 	@Query("SELECT r FROM Request r WHERE r.requestStatus=Null ORDER BY r.requestDate DESC")
 	Iterable<Request> pendingRequests();
 	
+	@Query(value = "SELECT r.request_id FROM requests r WHERE r.request_status IS NULL ORDER BY r.request_date DESC LIMIT 1", nativeQuery = true)
+	Long getOneRecord();
+	
 
 }

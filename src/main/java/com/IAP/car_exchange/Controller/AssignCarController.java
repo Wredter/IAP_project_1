@@ -25,6 +25,11 @@ public class AssignCarController {
 		return DataAccess.getPendingRequests();
 	}
 	
+	@GetMapping("onependingrequest")
+	public @ResponseBody Long getOnePendingRequest(){
+		return DataAccess.getOneLastRequest();
+	}
+	
 	@GetMapping("filter/{model}/{type}")
 	public @ResponseBody Iterable<Car> getCarByFilter(@PathVariable String model, @PathVariable String type) {
 		return DataAccess.getCarByModelType(model, type);

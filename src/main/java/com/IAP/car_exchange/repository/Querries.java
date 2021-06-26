@@ -290,6 +290,9 @@ public class Querries {
         requestRepository.delete(request);
     }
     
+    public Long getOneLastRequest() {
+    	return requestRepository.getOneRecord();
+    }
     
     /////////////////////////ASSIGN CAR/////////////////////////////////////////////////////////////////////
     // Find Car By (model,type,assigned?,super_admin_id)
